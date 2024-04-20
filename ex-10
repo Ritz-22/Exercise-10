@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <?php
+   $passerr = "";
+   $pass = "";
+
+        if (empty($_POST["t2"])) {
+            $passerr = "Enter Password";
+        } else {
+            $pass = $_POST["t2"];
+            $min_length = 8;
+            if (strlen($pass) < $min_length) {
+                $passerr = "Password should be at least $min_length characters long.";
+            } else {
+                $uppercase = preg_match('/[A-Z]/', $pass);
+                $lowercase = preg_match('/[a-z]/', $pass);
+                $number = preg_match('/[0-9]/', $pass);
+                $special_char = preg_match('/[^A-Za-z0-9]/', $pass);
+                if (!$uppercase || !$lowercase || !$number || !$special_char) {
+                    $passerr = "Password should contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+                }
+            }
+        }
+    
+    ?>
+
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        Password: <input type="password" name="t2"><span class="error">* <?php echo $passerr; ?></span><br>
+        <input type="submit" name="submit">
+    </form>
+
+    <?php
+    if ($passerr == "") {
+        if (isset($_POST['submit'])) {
+        
+            echo "Password: " . htmlspecialchars($pass) . "<br>";
+        }
+    }
+    ?>
+</body>
+</html>
