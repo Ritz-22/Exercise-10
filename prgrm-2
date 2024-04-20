@@ -1,12 +1,29 @@
-<?php
-$binary_number = "101010";
-$decimal = 0;
-$length = strlen($binary_number);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary to Decimal Converter</title>
+</head>
+<body>
+    <h2>Binary to Decimal Converter</h2>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="get">
+        Binary Number: <input type="text" name="binary_number" value="<?php echo isset($_GET['binary_number']) ? htmlspecialchars($_GET['binary_number']) : ''; ?>"><br>
+        <input type="submit" value="Convert">
+    </form>
 
-for ($i = 0; $i < $length; $i++) {
-    $digit = $binary_number[$length - $i - 1];
-    $decimal += $digit * pow(2, $i);
-}
-
-echo "Decimal equivalent of $binary_number is: $decimal";
-?>
+    <?php
+    if(isset($_GET['binary_number'])) {
+        $binary_number = $_GET['binary_number'];
+        
+        $decimal = 0;
+        $length = strlen($binary_number);
+        for ($i = 0; $i < $length; $i++) {
+            $digit = $binary_number[$length - $i - 1];
+            $decimal += $digit * pow(2, $i);
+        }
+        echo "Decimal equivalent of $binary_number is: $decimal";
+    }
+    ?>
+</body>
+</html>
